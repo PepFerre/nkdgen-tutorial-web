@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>tutorial</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My new website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Thin Film Optics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="./nkdgen.html">NKDGEN</a>
+    </li>
+    <li>
+      <a href="./tutorial.html">Thin Film Calculation Tutorial</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">tutorial</h1>
+
+</div>
+
+
+<div id="i.-introduction" class="section level1">
+<h1>I. Introduction</h1>
+<p>Thin film coatings can be found in a wide variety of devices and are truly ubiquitous in the daily life of billions of people. The technology has become so ingrained in our global society that it is often overlooked. For example, in smartphones thin films have a profound effect on touch panels and help to improve touch features, increase the transmittance of touch panels, and lengthen the lifespan of displays. For liquid crystal displays applications, optical thin film coatings are used in regard to these devices to produce lenses with virtually no reflection, metal films with a high level of reflectance, and optical filters and mirrors that are used to create rich, vibrant colors. Reflecting telescopes utilize optical thin films to produce mirrors that are highly reflective. In solar energy, solar panels performance rely on, for example, high-durability transparent thin film that protect their surface. In transportation, defrosters and transparent heaters that are used to keep the windows of vehicles from freezing during cold weather make also use of thin film technology. (Schmidtke 2010; Eckhardt, Siebold, and Lasagni 2016; Labidi, Tahar, and Choubani 2011; Horng et al. 2019; Theuring et al. 2015; Deng et al. 2018; Ge et al. 2018; Carretero and Alonso 2018; Wang et al. 2018; Guenster, Ristau, and Bosch-Puig 2000; D. Ristau et al. 2002; Detlev Ristau et al. 1999; S. Bosch, Leinfellner, et al. 2000; Chiang 2004)(Santbergen, Smets, and Zeman 2013; Park et al. 2016; Ahmed and Mehaney 2019; Lee et al. 2015; C. Liu et al. 2018; Meng et al. 2017; Zhu et al. 2018; Dai et al. 2016; Ng et al. 2019; Ilic, Went, and Atwater 2018; Garlisi et al. 2020; Laurence et al. 2020; Aly, Ahmed, and Shaban 2020; X. Liu et al. 2014; Shirayama et al. 2016; Dumanli and Savin 2016; Bullock et al. 2018; Yang et al. 2016; Ríos et al. 2016; Ji et al. 2017; Li, Butun, and Aydin 2015; Guo et al. 2014; Alaaeddin et al. 2019; Zhao et al. 2011; Han and Chang 2014; Busch et al. 2007; Myroshnychenko et al. 2008).</p>
+<p>The computation of the optical performances (reflectance, transmittance, phase changes upon light reflection, etc…) of thin film layered structures is a topic of major practical interest. The accurate theoretical framework for the problem is the electromagnetic theory of light and a good knowledge of this theory is required for addressing all the related technological issues in depth. The basic underlying assumption is that light interference governs the pass of light through the layers, because of its ‘thin’ character. This normally means physical thicknesses up to some microns (maximum). Conversely, we will always assume that the pass of the light through the substrates is described in terms of beam intensities. All these aspects, for our present development, are established in detail in the references significant in the field (Born and Wolf 1999; Macleod 2010; Kaiser and Pulker 2013; Furman and Tikhonravov 1992; Berning 1963; Yeh 2005; Arwin 2015) and, for clarity and conciseness, we adopt as a reference text for our approach, the optical theory as it is developed in ch. 2 of Macleod’s book(Macleod 2010). This textbook is one of the most renowned in the field from its first edition and has updated its contents continuously. We will assume that the reader has a good/reasonable knowledge of that text, since it is a requirement for our present developments. A deep and detailed understanding is not required, as far as all the definitions and formulas presented therein are clearly understood. Operating this way we ensure a sound theoretical basis for our work by simply including here a short summary of the important theoretical results and, at the same time, using for our program codes notations similar to our reference text.</p>
+<p>The computation of the optical properties of thin film coating finds application in a wealth of fields. Thin film coatings are one of the main components in the efficiency of solar cells and examples can be found of the optimization of such coatings by modeling [Zhao2011,Santbergen2013]. The transfer matrix method is also applied in the maximization of absorption in the active layers of the solar cells with examples in perovskite solar cells [Shirayama2016], in the use of specific absorbing layers [Yang2016,Liu2014], or in plasmonic light trapping[Guo2014]. Another range of application where the knowledge provided by simulation is essential is in the design of color filters for photodetectors or light-emitting devices in different wavelength ranges[Li2015,Dai2016, Dumanli2016,Park2016], or displays[Lee2015, Ji2017]. Thin film coatings and their modeling play an important role in biosensors[Ahmed2019,Dai2016,Meng2017] and photodetectors[Bullock2018]. Other examples where computation of thin film performance is useful is in coatings for glasses in automotive or building industries[Garlisi2020,Aly2020], for high power lasers[Laurence2020], wearable and implantable optoelectronic devices [Liu2018], graphene absorbers[Zhu2018], gravitational wave detectors[Mitrofanov2015] or relativistic light sails[Ilic2018].</p>
+<p>In the present Tutorial we will address the general case: thin film structures with any number of layers, with transparent or absorbing materials, with oblique incidence angle and incident polarized light beams. Thus, we think that the utility of our present work is wide and quite general. We do not allow anisotropy in the materials; this is not a serious limitation in practice, since this is a very advanced and specific topic of limited practical interest. In short, a thin film structure consists of a series of plano parallel layers alternating different materials (usually transparent) deposited on a substrate. When light incides on the structure, the interference effects originated at the interfaces of the layers give rise to some resulting reflected and transmitted beams. Overall, the properties of the reflected and transmitted beams can be dramatically changed depending on the combination of refractive indices and thicknesses of the layers of the structure. In the most general case, the refractive indices are dispersive (different for each wavelength) and able to represent absorbing materials, by being defined by complex numbers (not simply by real numbers). The incidence angle of the light is also a characteristic parameter for the problem. Thus, the primary objective of a computing program for thin films is to determine the characteristics of the resulting reflected and transmitted beams, from the knowledge of the incident beam and the design parameters of the structure.</p>
+<p>This brief description is useful to explain our practical approach to build a computation program. After a concise theoretical introduction, we begin by the precise optical description of the thin film structure. Next, the electromagnetic theory is used to physically describe the light interference effects at all the interfaces, leading to some convenient key parameters (basically the overall reflectance and transmittance coefficients) to characterize the structure. The core of the theory is built inside some numerical ‘functions’ that the user does not need to change. Finally, once the overall parameters mentioned are calculated, the last part of the program is to use them for finding the relevant measurable magnitudes for the problem under study (say light intensity reflectance, transmittance, etc). We will illustrate all the procedures by developing elementary examples that will enhance the capability of the user to, simply, modify them in an intuitive manner to suit the specific user’s needs. The Tutorial is organized as follows. Initially we give a short summary of the most important theoretical results, following the developments of Macleod and simultaneously introducing the designation of the magnitudes in our codes. Next, a first basic example is presented to illustrate the simplicity of the overall procedure. In a second example (more advanced) we will show all the relevant programing details. The 3rd example illustrates how our computational procedures are able to address specialized research topics by simple adaptations of our codes. Finally, a schematic review of the overall programming techniques will summarize them. The final complete details related to how to calculate other interesting quantities, explanations about some functions and how to enhance the capabilities of the present software are developed in the Appendix.</p>
+<p>For conciseness, the examples are presented in Matlab language, where a ‘function’ is some limited code that works as follows: you give the function some input as arguments and the function gives some output. A ‘script’ in Matlab is a general piece of code that handles the operations and calls the functions. It is also possible to include the functions inside the code of a script in a single file (we will do it in one case in the Appendix). The Python version of the programs is also included in the Appendix.</p>
+</div>
+<div id="ii.-summary-of-theoretical-results" class="section level1">
+<h1>II. Summary of Theoretical Results</h1>
+<div id="a.-description-of-the-thin-film-structure" class="section level2">
+<h2>A. Description of the thin film structure</h2>
+<p>Thin films are structures composed by plano-parallel layers made of materials that have different optical properties. Due to the interference effects generated by the assembly, dramatic changes in the optical performance of the setup can be achieved. The precise theoretical framework to approach the problem is the electromagnetic theory of light(Born and Wolf 1999; Macleod 2010; Kaiser and Pulker 2013; Furman and Tikhonravov 1992; Berning 1963; Yeh 2005; Arwin 2015) and, apart from manufacture difficulties, a deep knowledge of this theory allows addressing all the design issues adequately.</p>
+<p>In our present development, we adopt as a reference text for our approach, the optical theory as it is developed and presented in chapter 2 of Macleod’s book(Macleod 2010). We will summarize now the main results presented therein at the same time we introduce the names of the different magnitudes in our programs in accordance with the text. All our procedures will be valid for dispersive materials but the description here is monochromatic for simplicity.</p>
+<p>Each material constituting any layer is isotropic and it has a definite refractive index. For transparent materials this value is simply the ratio between the speed of light in vacuum and in the medium (a real number) but, when the material is absorbing, the refractive index is a complex number with not so simple interpretation(Cabrera, López, and Agulló-López 1998; Born and Wolf 1999). We will number the series of materials increasing from the ambient (<span class="math inline">\(0\)</span>) to the substrate <span class="math inline">\((1, 2, …, m)\)</span>, writing their complex refractive indices as <span class="math inline">\(N_0, N_1, ..., N_m\)</span>. In accordance, the physical thicknesses are both ‘infinite’ for the ambient and substrate (<span class="math inline">\(d_0=d_m=\infty\)</span>) and <span class="math inline">\(d_1,d_2,...,d_{m-1}\)</span> for the layers (having units of length). We will always realistically assume the ‘ambient’ where we perform the experiments to be transparent (<span class="math inline">\(N_0\in\mathbb{R}\)</span>) but we allow the rest of the materials to be absorbing, writing for material of layer ‘<span class="math inline">\(r\)</span>’ in the form <span class="math inline">\(N_r=n_r-ik_r\)</span> , where ‘<span class="math inline">\(i\)</span>’ is the imaginary unit. The substrate may be coated also at the rear surface. If its shape is plano-parallel and its constitutive material is non-absorbing, we will be able to calculate transmittances and reflectances also for this case.</p>
+<p><img src="Figura_01.png" /> Figure 1. Layout of the physical configuration we consider here.</p>
+<p>The substrate may be coated also at the rear surface. If its shape is plano-parallel and its constitutive material is non-absorbing, we will be able to calculate transmittances and reflectances also for this case.</p>
+<p>We assume that there is only one normal direction to all the interfaces. If this normal coincides with the incident light beam direction, we have the normal incidence case. If not, the oblique beam direction and the normal direction define the incidence plane in our problem, being the incidence angle named <span class="math inline">\(\theta_0\)</span>. Following our reference text, from now on, in our developments we will consider only the components of the electric and magnetic fields that are parallel to the interfaces(Macleod 2010). Besides, it is important to note that the electromagnetic theory of light demonstrates the validity of the Snell law for complex refractive indices, for the rays trough the layers(Macleod 2010), allowing us to write: <span class="math display">\[N_0\sin\theta_0=N_1\sin\theta_1=...=N_m\sin\theta_m . \qquad (1)\]</span> To develop the theory for the general case of oblique incidence with isotropic materials, the transverse electric field of the incident beam must be separated into its parallel (‘p’, also known as ‘TM’) and the perpendicular (‘s’, also known as ‘TE’) components. This separation is crucial in all the theory below, since the two components do not mix or interfere and, simply, lead to two independent problems to be solved: the ‘p’ and the ‘s’ problems. Moreover, the ‘s’ components of all the fields are mutually parallel and inherently tangential to all the interfaces unlike the ‘p’ components, that change direction at each light refraction. To simplify things, as we have mentioned above, in thin film developments it is usual to consider only the tangential parts of the ‘p’ electric fields, since they are the only responsible for energy fluxes in the direction normal to the layers. Thus, in what follows, two independent problems have to be solved separately: the ‘p’ problem (for its tangential part of the electric field) and the ‘s’ problem, for this component of the electric field. The solving techniques are quite similar, but not identical.</p>
+</div>
+<div id="b.-numerical-statement-of-the-problem" class="section level2">
+<h2>B. Numerical Statement of the Problem</h2>
+<p>For each of the materials in our structure, assuming incidence angle <span class="math inline">\(\theta_0\)</span>, let us introduce the tilted optical admittance for the ‘p’ and ‘s’ polarizations according to the formulas: <span class="math display">\[\eta_p = \frac{N}{\cos\theta}, \eta_s=N\cos\theta, \qquad (2)\]</span> where expression (1) has to be used for computing <span class="math inline">\(\theta\)</span> inside the materials. For each polarization, the numerical solving procedures use a <span class="math inline">\(2\times 2\)</span> matrix for each layer. If the geometrical thickness of the layer is <span class="math inline">\(d\)</span>, the corresponding matrix is:</p>
+<p><span class="math display">\[M = \begin{pmatrix}
+\cos \delta &amp; (i\sin\delta)/\eta \\
+i\eta\sin\delta &amp; \cos\delta 
+\end{pmatrix}
+\; \mathrm{with} \; \delta = \frac{2\pi Nd\cos\delta}{\lambda}. \qquad (3)\]</span></p>
+<p>For the assembly, with our notation, we finally have: <span class="math display">\[
+\begin{pmatrix}
+B \\
+C 
+\end{pmatrix} = M_1M_2...M_{m-1}\begin{pmatrix}
+1 \\
+\eta_m 
+\end{pmatrix}, \qquad (4)
+\]</span></p>
+<p>from where we compute</p>
+<p><span class="math display">\[r=\frac{\eta_0B-C}{\eta_0B+C}, \; T=\frac{4\eta_0 Re(\eta_m)}{\left|\eta_0B+C\right|^2}. \qquad (5)\]</span></p>
+<p>Since there are the two independent ‘p’ and ‘s’ polarizations, with independent optical admittances as given by (2), we finally may define the four quantities <span class="math display">\[r_P,T_p,r_s,T_s . \qquad (6)\]</span></p>
+<p>The ‘r’ quantities are complex ratios for the electric field (between reflected and incident amplitudes). Then, the intensity reflectances are, simply: <span class="math display">\[R_p=\left|r_p\right|^2, R_s=\left|r_s\right|^2\]</span> and the phase changes upon reflection are usually defined by the single complex quantity <span class="math inline">\(\rho\)</span> or, equivalently, by the two real quantities <span class="math inline">\((\Delta,\Psi)\)</span> according to the following equations(Azzam, Bashara, and Ballard 1978): <span class="math display">\[\rho\equiv\frac{r_p}{r_s}\equiv\tan\Psi\cdot e^{i\Delta}\]</span></p>
+<p>For the ratios between transmitted and incident beam intensities, the relevant quantities are, directly <span class="math inline">\(T_p\)</span> and <span class="math inline">\(T_s\)</span>. Note that usually it is very difficult to measure phase changes at the exit side of the substrate and only light intensity ratios are of practical interest for transmitted light. When the substrate is transparent and coated at both sides (designed here ‘a’ and ‘b’) the relevant formulas for the overall intensity ratios are the following, according to the notations introduced in our Figure 2.</p>
+<p><img src="Figura_02.png" /> Figure 2: Notations used in the text for two-sided coated samples.</p>
+<p><span class="math display">\[T=\frac{T_aT_b}{1-R_a^-R_b^+}, R = \frac{R_a^++R_b^+\left(T_a^2-R_a^-R_b^+\right)}{1-R_a^-R_b^+}.\qquad (9)\]</span></p>
+<p>Note that when the substrate is not semi-infinite (i.e., when there is back side light reflection mixed with the front side reflected beam) it does not make sense to measure phase changes at reflection and only light intensity ratios are of practical interest.</p>
+<p>Finally, considering both light polarizations ‘p’ and ‘s’, all the relevant quantities for all the measurable quantities at front and rear surfaces are: <span class="math display">\[
+\begin{matrix}
+R_p^{a+} = \left|r_p^{a+}\right|^2, R_p^{a-} = \left|r_p^{a-}\right|^2, T_p^{a+}, T_p^{a-}, R_p^{b+}=\left|r_p^{b+}\right|^2,T_p^{b+},\\ 
+R_s^{a+} = \left|r_s^{a+}\right|^2, R_s^{a-} = \left|r_s^{a-}\right|^2, T_s^{a+}, T_s^{a-}, R_s^{b+}=\left|r_s^{b+}\right|^2,T_s^{b+}\end{matrix} \qquad (10)
+\]</span> In the code that follows, we propose the following names for these quantities: <code>Rp_aPlus</code>, <code>Rp_aMinus</code>, <code>Tp_aPlus</code>, <code>Tp_aMinus</code>, <code>Rp_bPlus</code>, <code>Tp_bPlus</code>, <code>Rs_aPlus</code>, <code>Rs_aMinus</code>, <code>Ts_aPlus</code>, <code>Ts_aMinus</code>, <code>Rs_bPlus</code>, and <code>Ts_bPlus</code>. Accordingly, for the whole sample, the reflectances and transmittances will be designed: <code>Rp</code>, <code>Rs</code>, <code>Tp</code>, and <code>Ts</code>.</p>
+<p>For a dispersive range of wavelengths, all the above processes have to be repeated at each single wavelength, according to the way the dispersion is defined. At this point, different practical situations may arise. The simplest case corresponds to having the changes of refractive index with wavelength for one material defined by means of a ‘dispersion formula’ or ‘dispersive model’: given the wavelength, we use a formula to calculate the index. Of course, the practical validity of the procedure relies on the previous practical knowledge of the material. For example, for dielectric materials in the visible range between 400 and 700 nm (maybe having weak light absorption), a common formula is the Cauchy dispersion(S. Bosch, Ferré-Borrull, and Sancho-Parramon 2001; Sancho-Parramon et al. 2003), given by: <span class="math display">\[n(\lambda) = n_0+\frac{n_1}{\lambda^2}+\frac{n_2}{\lambda^4}, k(\lambda) = k_0\exp\left(\frac{k_1}{\lambda}\right), \lambda \;(\mathrm{nm})\qquad (11)\]</span></p>
+<p>(note that <span class="math inline">\(n_0\)</span>, <span class="math inline">\(n_1\)</span>, <span class="math inline">\(n_2\)</span>, <span class="math inline">\(k_0\)</span> and <span class="math inline">\(k_1\)</span> are numerical constants for defining the complex refractive index <span class="math inline">\(N=n-ik\)</span> of the single material which constitutes a single layer, and the notation is not related to layers 0, 1, 2,…). Another common situation arises in case of using one material whose refractive index is known in advance and the corresponding data have been previously stored in a file in form of a list, for each wavelength of our range of interest. We will address these (and other) ways of defining the dispersive refractive index in the following paragraphs.</p>
+<p>Finally, there is an important detail to be considered for oblique incidence with dispersive materials regarding the validity of the Snell law in refraction (expression (1)). When we calculate backside quantities, the actual incidence angle on the substrate changes with the wavelength. This fact will be considered explicitly when developing Example 2.</p>
+</div>
+<div id="c.-calculation-of-the-magnitudes-of-interest" class="section level2">
+<h2>C. Calculation of the Magnitudes of Interest</h2>
+<p>Finally, once the coefficients defined in (10) are found for the sample, the measurable magnitudes for the problem (usually beam intensity reflectance, transmittance, etc) may be computed. It is important to note that, for finding the different magnitudes of interest, it is necessary to master the physical concepts involved in the problem (it is not only a numerical issue). For example, assume the incident light beam is linearly polarized, with the electric field vibrating at angle <span class="math inline">\(\phi\)</span> with respect to the incident plane. Then, the ratio between ‘p’ and ‘s’ electric field incident amplitudes is <span class="math inline">\(\frac{E_p^0}{E_s^0}=\frac{\cos\phi}{\sin\phi}\)</span>. Thus, the reflected and transmitted amplitudes have to be multiplied according to this ratio and the reflected and transmitted energies will be the following weighted means <span class="math display">\[T = T_p\cos^2\phi+T_s\sin^2\phi,\;R=R_p\cos^2\phi+R_s\sin^2\phi\qquad (12)\]</span> of course affecting all the above quantities: <span class="math display">\[
+\begin{matrix}
+R_p^{a+}\cos^2\phi, R_p^{a-}\cos^2\phi, T_p^{a+}\cos^2\phi, T_p^{a-}\cos^2\phi, R_p^{b+}\cos^2\phi, T_p^{b+}\cos^2\phi,\\ 
+R_s^{a+}\sin^2\phi, R_s^{a-}\sin^2\phi, T_s^{a+}\sin^2\phi, T_s^{a-}\sin^2\phi, R_s^{b+}\sin^2\phi, T_s^{b+}\sin^2\phi
+\end{matrix} \qquad (13)
+\]</span></p>
+<p>Similarly, for incident elliptically polarized light defined by the parameters <span class="math inline">\((\psi,\chi)\)</span>, it will be necessary to relate them to the ‘p’ and ‘s’ electric field components and subsequently to the reflected or transmitted calculated magnitudes(Saleh and Teich 2013; Arwin 2015). Thus, in the most general case, finding the different magnitudes of interest requires solving a detailed physical problem. The numerical procedures we are explaining in this Tutorial (examples and Appendix) address some common situations but it is not at all possible to be comprehensive for all the practical configurations and measurable magnitudes.</p>
+</div>
+</div>
+<div id="iii.-example-1-basic-showing-the-performances-of-an-anti-reflective-ccoating-on-glass" class="section level1">
+<h1>III. Example 1 (BASIC): Showing the Performances of an anti-Reflective Ccoating on Glass</h1>
+<div id="a.-definition-of-the-physical-structure" class="section level2">
+<h2>A. Definition of the Physical Structure</h2>
+<div id="range-of-wavelengths" class="section level3">
+<h3>1. Range of wavelengths</h3>
+<p>The starting point of the whole process is to define the range of wavelengths of interest and its units. Subsequently, in all our programs all the calculations will be performed step by step for each single wavelength. The range of wavelengths is fixed by a variable ‘<code>x</code>’ (here supposed to be in nanometer units), as follows:</p>
+<pre><code>nlamb=31; x=linspace(400,700,nlamb);</code></pre>
+<p>The meaning of this line of code is obvious: we take 31 wavelengths equally spaced from 400 to 700 nanometers (both limits included), so in 10 nm steps. It is important to note that the choice of the range and the units is crucial, since this range is implicitly understood to be unique and the same for all the forthcoming procedures. Nevertheless, it should be clear from now that the adaptation of the programs to other units or even to non-equally spaced intervals is straightforward.</p>
+</div>
+<div id="thickness-and-dispersion-of-one-layer" class="section level3">
+<h3>2. Thickness and dispersion of one layer</h3>
+<p>Next, we have to define each individual layer of the physical configuration: geometrical thickness and material. We have to decide the units for the thickness. Here we will use ‘nm’ consistently (microns could be another equivalent choice). To identify each medium (or material) in the lines of code of our program we will use two items:</p>
+<ol style="list-style-type: lower-roman">
+<li><p>one keyword acting as the name identifying the material (in practical terms, the type of dispersion of its refractive index), and</p></li>
+<li><p>the numerical parameters of the dispersion type that actually give the refractive index values in the range of interest. For example, for a 120 nm thick layer of material, whose refractive index obeys the Cauchy formula (11) with five parameters <span class="math inline">\(n_0\)</span>,<span class="math inline">\(n_1\)</span>,<span class="math inline">\(n_2\)</span>,<span class="math inline">\(k_0\)</span>,<span class="math inline">\(k_1\)</span> with <span class="math inline">\(n_0=2.0\)</span>, <span class="math inline">\(n_1 = 10000.0\;\mathrm{nm^1}\)</span>, <span class="math inline">\(n_2 = 0.0\)</span>, <span class="math inline">\(k_0=0.01\)</span>, <span class="math inline">\(k_1=200.0\;\mathrm{nm}\)</span>.</p></li>
+</ol>
+<p>we will use a line of code like the following:</p>
+<pre><code>120. &#39;Cauchy&#39; {2.0 10000. 0. 0.01 200.};</code></pre>
+<p>Later in our program, the refractive index of the material for each wavelength will be computed using the five parameters supplied, according to the dispersion formula (11). Namely:</p>
+<pre><code>  v5p(1)=2.0; v5p(2)=10000.; v5p(3)=0.; v5p(4)=0.01; v5p(5)=200.;
+  nnn=v5p(1)+v5p(2)./x.^2+v5p(3)./x.^4;
+  kap=abs(v5p(4))*exp(v5p(5)./x);
+  Nlay=nnn-1i*kap;</code></pre>
+<p>Regarding the details of the Matlab language, note the use of the <code>{ }</code> braces and blank spacing between values after the text ‘<code>Cauchy</code>’ and the use of the operators ‘<code>./</code>’ and ‘<code>.^2</code>’ for the division and squaring operations, in order operate for the full length of ‘<code>x</code>’. If Python language is used, these conventions are different.</p>
+<p>To designate the material for the ambient, a meaningful line of code can be:</p>
+<pre><code>Inf &#39;Constant&#39; {1.000277 0.} , </code></pre>
+<p>with ‘<code>Inf</code>’ meaning infinite thickness and <code>‘Constant’</code> as the appropriate name for designating any material whose refractive index is constant. Here in this line, the ambient could be <code>‘air’</code> with <code>nnn=1.000277</code> and <code>kap=0.0</code>. Later the two parameters supplied will be used in the code:</p>
+<pre><code>  v2p(1)=1.000277; v2p(2)=0.;      % kap must be ‘0’ for ambient!!
+  nnn=v2p(1); kap=abs(v2p(2));      
+  Nlay=(nnn-1i*kap).*linspace(1,1,length(x));</code></pre>
+<p>This procedure is useful for defining any material without dispersion since it uses two parameters (real and imaginary part of the <code>‘Constant’</code> refractive index) creating an array of constant complex refractive indices, one for each item in ‘<code>x</code>’. These indices, in fact, repeat the values supplied ‘<code>v2p(1)=1.000277</code>’ and ‘<code>v2p(2)=0.</code>’, but have the right format we use later in our programs. Note that we are forcing the imaginary part of the calculated complex refractive index to be negative, as required in our theoretical developments.</p>
+<p>Typically we simply use for ambient <code>‘air’</code> the following line:</p>
+<pre><code>Inf &#39;Constant&#39;  {1. 0.}. </code></pre>
+<p>Note that for ambient <code>‘water’</code> we could similarly do:</p>
+<pre><code>Inf &#39;Constant&#39;  {1.33 0.}.</code></pre>
+<p>For glass, typically the refractive index is known with high precision from the manufacturer. Then, if the coating is deposited on a glass substrate, the definition of the material as our semi-infinite substrate can be:</p>
+<pre><code>Inf &#39;BK7&#39; {0} , </code></pre>
+<p>with the parameter ‘0’ alone meaning that no parameters are required, since we will use the manufacturer’s data (“SCHOTT N-BK7® | SCHOTT Advanced Optics” n.d.) for finding the refractive index for the wavelengths (‘<code>x</code>’) as follows:</p>
+<pre><code>    n2=1+(1.03961*x.^2)./(x.^2-6.0e3)+(0.23179*x.^2)./ ...
+    (x.^2-2.0e4)+(1.0146*x.^2)./(x.^2-1.0e8);
+    nnn=sqrt(n2);
+    Nlay=nnn-1i*0.0;</code></pre>
+<p>This code works according to the formula supplied: <span class="math display">\[
+n^2(\lambda) = 1+\frac{1.03961\lambda^2}{\left(\lambda^2-6\cdot10^3\right)}+\frac{0.23179\lambda^2}{\left(\lambda^2-2\cdot10^4\right)}+\frac{1.01460\lambda^2}{\left(\lambda^2-1\cdot10^8\right)},\;k(\lambda)=0.0,\lambda\;\mathrm{in\; nm}.
+\]</span> Again, we get an array of complex refractive indices, one for each item in ‘<code>x</code>’, that have null imaginary part.</p>
+<p>So far, we have presented three ways for introducing the refractive index data of the materials in our programs: the use of a dispersion formula, supplying the fixed constant values or computing the values from manufacturer’s data. In Example 2 we will allow more options.</p>
+</div>
+<div id="the-layers-of-the-coating" class="section level3">
+<h3>3. The layers of the coating</h3>
+<p>Next we have to define our physical configuration. We plan to study the performances of an anti-reflective (AR) coating on glass. We know from references(Macleod 2010) that three alternating layers of low, high and low refractive indices with suitable thicknesses will do the job. For example, assume we use <span class="math inline">\(\rm MgF_2\)</span> as low index material with dispersion given by: <span class="math display">\[
+n(\lambda) = 1.36+\frac{4100}{\lambda^2},\;k(\lambda)=0.0,\lambda\;\mathrm{in\; nm}.
+\]</span></p>
+<p>and <span class="math inline">\(\rm TiO_2\)</span> as high index material, with dispersion: <span class="math display">\[
+n(\lambda) = 2.00+\frac{17500}{\lambda^2}+\frac{9800}{\lambda^4},\;k(\lambda)=0.0,\lambda\;\mathrm{in\; nm}.
+\]</span></p>
+<p>The complete AR configuration is described by a ‘struct’ data type in Matlab, that we give the name ‘layers’, and consists of five lines:</p>
+<pre><code>layers = {Inf &#39;Constant&#39;    {1. 0.};
+          93 &#39;Cauchy&#39; {1.36 4100. 0. 0. 0.};
+          121 &#39;Cauchy&#39; {2.0 17500. 98000. 0. 0.};
+          185 &#39;Cauchy&#39; {1.36 4100. 0. 0. 0.};
+          Inf &#39;BK7&#39; {0} };</code></pre>
+<p>The first layer is in fact the ambient, with thickness ‘<code>Inf</code>’, material <code>‘Constant’</code> and the 2 parameters for defining the actual refractive index given by the bracket <code>{1. 0.}</code>.The second layer (the most external one) is a <code>93</code> nm thick MgF2 layer, whose dispersion is <code>‘Cauchy’</code> type with the five associated parameters <code>{1.36 4100. 0. 0. 0.}</code>. The third (central) layer is a <code>121</code> nm thick sheet of TiO2 material again with dispersion type <code>‘Cauchy’</code>, but now with the five associated parameters <code>{2.0 17500. 98000. 0. 0.}</code>. The fourth (innermost towards the substrate) layer is like the most external one, but with thickness <code>185</code> nm. The 5th layer is, in fact, the semi infinite substrate of <code>BK7</code> glass material.</p>
+</div>
+</div>
+<div id="b.-performing-the-calculations" class="section level2">
+<h2>B. Performing the calculations</h2>
+<p>We will assume always the ambient to be transparent(Macleod 2010) but, to simplify computations, we use one incidence angle and one ambient refractive index value for each single wavelength in the array <code>x</code>. Thus, both the index of the transparent ambient (<code>N0</code>) and the incidence angle in radians (<code>incang</code>) must be arrays of length <code>nlamb</code>.</p>
+<p>For one layer of thickness <code>d</code> whose dispersive refractive indices are <code>N</code>, the <span class="math inline">\(2\times2\)</span> matrices mentioned in our expression (3) and corresponding to each wavelength in <code>x</code>, are named <code>Ms</code> for ‘s’ and <code>Mp</code> for ‘p’ polarizations. The matrix product (for each wavelength in <code>x</code>) for the whole structure <code>layers</code> is performed and the overall <code>rs</code> and <code>rp</code> (and also <code>Ts</code> and <code>Tp</code>) coefficients of the assembly are obtained by means of the following function:</p>
+<pre><code>function [rs,rp,Ts,Tp] = calc_rsrpTsTp(incang,layers,x)</code></pre>
+<p>Most of the measurable quantities such as reflectance, transmittance, polarization changes… are directly computed from the knowledge of these overall <code>[rs,rp,Ts,Tp]</code> coefficients. The source code and description of these two functions are presented in the Appendix, since they correspond to the core of the calculations and need not to be modified by the user.</p>
+</div>
+<div id="c.-plotting-the-spectral-reflectances" class="section level2">
+<h2>C. Plotting the Spectral Reflectances</h2>
+<p>This Example 1 illustrates the calculations of light reflectances for one stack of three layers on a semi-infinite substrate. Semi-infinite is the term for a substrate where there is no beam coming back from the rear of the substrate. As demonstrated in chapter 2 of Ref(Macleod 2010), the intensity reflectances Rs or Rp can be computed by simply squaring the values <code>rs</code> and <code>rp</code> previously found.</p>
+<p>First we will calculate the reflectance at normal incidence, i.e., for</p>
+<pre><code>incang=0. * linspace(1,1,length(x))</code></pre>
+<p>where ‘p’ and ‘s’ polarizations are equivalent(Macleod 2010). For comparison, we will show the <code>Rp</code> and <code>Rs</code> reflectances at 40 deg, i.e., by making:</p>
+<pre><code>incang=40.*pi/180 * linspace(1,1,length(x)</code></pre>
+<p>Moreover, the reflectance of the bare substrate at normal incidence is also calculated by redefining the configuration (i.e., eliminating the coating).</p>
+<p>Figure 3 illustrates how the reflectance of the bare substrate at normal incidence (<code>Rglass</code>), that is more than 4% for all the full range from 400 to 700 nm, is reduced to a mean value of around 1% for that range (line R0). For comparison, for the incidence angle of 40 deg, the two quite different reflectances <code>Rs40</code> and <code>Rp40</code> are also shown.</p>
+<p><img src="Figura_03.png" /> Figure 3. Reflectances of a semi infinite glass substrate coated with our three thin layers. Reflectance of the sample (coated glass) <code>R0</code> and of the bare substrate <code>Rglass</code> at normal incidence. For 40 deg. incidence angle, reflectances of the sample for incident ‘s’ polarisation <code>Rs40</code> and for incident ‘p’ polarization <code>Rp40</code>.</p>
+<p>Next in this Example 1, for the 40 deg. incidence angle, we compare the light reflection for the two following cases: incident linearly polarized light (vibrating at 30 deg. with respect to the incidence plane) and incident natural (non-polarized) light. Figure 4 shows these results, designated respectively as <code>R40P30</code> and <code>R40Nat</code>. They have been computed using our expression (10).</p>
+<p><img src="Figura_04.png" /> Figure 4. For 40 deg. incidence angle, reflectances of the sample for incident linearly polarized light (vibrating at 30 deg with respect to the incidence plane) <code>R40P30</code> and for incident non polarized (natural) light <code>R40Nat</code>.</p>
+<pre><code>% script Example 1
+
+nlamb=31; x=linspace(400,700,nlamb);    % defining the wavelength range
+layers = {Inf &#39;Constant&#39; {1. 0.};       % defining the configuration
+           93 &#39;Cauchy&#39; {1.36 4100. 0. 0. 0.};
+          121 &#39;Cauchy&#39; {1.98 17500. 98000. 0. 0.};
+          185 &#39;Cauchy&#39; {1.36 4100. 0. 0. 0.};
+          Inf &#39;BK7&#39; {0} };
+ 
+incang=0.*pi/180 * linspace(1,1,length(x)); % defining the incidence angle
+[rs,rp,Ts,Tp]=calc_rsrpTsTp(incang,layers,x); % calculating the coefficients
+R0=(abs(rs)).^2;                    % rp=rs at 0 deg
+ 
+incang=40.*pi/180 * linspace(1,1,length(x));    % … the wew incidence angle
+[rs,rp,Ts,Tp]=calc_rsrpTsTp(incang,layers,x); % the new coefficients
+Rs40=(abs(rs)).^2;                  % Rs at 40 deg
+Rp40=(abs(rp)).^2;                  % Rp at 40 deg
+ 
+NO_layers = {Inf &#39;Constant&#39; {1. 0.};        % defining the bare substrate
+            Inf &#39;BK7&#39; {0} };
+incang=0.*pi/180 * linspace(1,1,length(x)); % incidence angle 0 deg
+[rs,rp,Ts,Tp]=calc_rsrpTsTp(incang,NO_layers,x);
+Rglass=(abs(rs)).^2;                % R of bare substrate at 0 deg
+ 
+plot(x,R0,x,Rs40,x,Rp40,x,Rglass), legend(&#39;R0&#39;,&#39;Rs40&#39;,&#39;Rp40&#39;,&#39;Rglass&#39;)
+
+ang_fi=30.0*pi/180;        % vibration direction for linearly polarized light 
+R40P30=(Rs40*(sin(ang_fi))^2+Rp40*(cos(ang_fi))^2)/2; % reflected intensity
+R40Nat=(Rs40+Rp40)/2;   % reflected intensity for natural light
+ 
+figure, plot(x,R40P30,x,R40Nat), legend(&#39;R40P30&#39;,&#39;R40Nat&#39;) 
+
+% end of script Example 1</code></pre>
+</div>
+</div>
+<div id="example-2-advanced-computations-for-a-susbtrate-coated-at-both-sides" class="section level1">
+<h1>Example 2 (ADVANCED): Computations for a Susbtrate Coated at both Sides</h1>
+<div id="a.-definition-of-the-physical-structure-1" class="section level2">
+<h2>A. Definition of the Physical Structure</h2>
+<div id="other-ways-to-specify-the-dispersion-of-one-layer" class="section level3">
+<h3>1. Other Ways to Specify the Dispersion of one Layer</h3>
+<p>In Example 1, three ways for defining the refractive index of materials were introduced. Often the refractive index data for one material are taken from databases or from files storing the values found in previous experiments(Johnson and Christy 1972). For our computations, it is only required to have available the values for our wavelength variable <code>x</code>. Thus, when refractive index data are stored in a file, it is convenient to allow defining one single layer with a line of code like:</p>
+<pre><code>135   &#39;File&#39;   {&#39;Ag_n_k.dat&#39;}; </code></pre>
+<p>representing a 135 nm thick layer of a material whose refractive index is contained in a <code>‘File’</code> whose name is <code>‘Ag_n_k.dat’</code>, the only requirement being that the data in the file have to cover the range of wavelengths <code>x</code> of our problem. Then, after reading the values, these are linearly interpolated to the exact values <code>x</code>. In case of mixtures of materials in one single layer, the Effective Medium Approximation (EMA) (Aspnes and Theeten 1979) may be suitable for representing its refractive index. The code performing these calculations and creating the file (equivalent in format to the previous <code>'Ag_n_k.dat'</code>) is more difficult to be developed, but is also presented in the Appendix as a script that applies the EMA theory for mixtures up to three materials(S. Bosch, Ferré-Borrull, et al. 2000).</p>
+</div>
+<div id="how-the-dispersion-of-the-layers-is-handled-in-the-program" class="section level3">
+<h3>2. How the dispersion of the layers is handled in the program</h3>
+<p>In the explanations of Example 1 we did not describe how the types of dispersion are handled inside the program. We do it by means of a ‘function’ as follows. According to the way we have build our structure <code>layers</code>, its line number 1 identifies the ambient, line number 2 designates the most external layer, line 3 the next internal … increasing towards the substrate. Thus, for <code>num_lay</code>=1, 2, … the code</p>
+<pre><code>layers{num_lay,2}</code></pre>
+<p>corresponds to the keyword (like <code>‘Constant’</code> or <code>‘Cauchy’</code> or <code>‘BK7’</code>) that identifies the kind of material for the layer with number <code>num_lay</code>. Thus, once the structure <code>layers</code> and the array of wavelengths <code>x</code> are given, the set of refractive index values <code>Nlay</code> corresponding to the layer with number <code>num_lay</code> is obtained by calling the following function:</p>
+<pre><code>function Nlay = calc_Nlayer(layers,x,num_lay)
+    switch layers{num_lay,2}
+        case &#39;Constant&#39;
+            v2p=[layers{num_lay,3}{1},layers{num_lay,3}{2}];
+            nnn=v2p(1); kap=abs(v2p(2));
+            Nlay=(nnn-1i*kap).*linspace(1,1,length(x));
+        case &#39;Cauchy&#39;
+        v5p=[layers{num_lay,3}{1},layers{num_lay,3}{2},layers{num_lay,3}{3},..
+                layers{num_lay,3}{4},layers{num_lay,3}{5}];
+      nnn=v5p(1)+v5p(2)./x.^2+v5p(3)./x.^4; kap=abs(v5p(4))*exp(v5p(5)./x);
+            Nlay=nnn-1i*kap;
+        case &#39;Sellmeier&#39;
+            v2p=[layers{num_lay,3}{1},layers{num_lay,3}{2}];
+            nnn=sqrt(1+v2p(1).*x.^2./(x.^2-v2p(2))); kap=0;
+            Nlay=nnn-1i*kap;
+        case &#39;File&#39;       
+            aux=load(layers{num_lay,3}{1});  % N,k data           
+            nnn=interp1(aux(:,1),aux(:,2),x); 
+            kap=interp1(aux(:,1),aux(:,3),x); 
+            Nlay=nnn-1i*abs(kap);     
+            Nlay=reshape(Nlay,[1,length(x)]);
+        case &#39;BK7&#39;
+            n2=1+(1.03961*x.^2)./(x.^2-6.0e3)+(0.23179*x.^2)./ ...
+                (x.^2-2.0e4)+(1.0146*x.^2)./(x.^2-1.0e8);
+            nnn=sqrt(n2);
+            Nlay=nnn-1i*0.0;
+    end
+end</code></pre>
+<p>Clearly, adding new types of media (<code>materials</code>) for all our programs amounts only to add new <code>case</code> caluses inside this function. Each case must be identified by a keyword (like <code>‘Constant’</code> or <code>'BK7’</code> or <code>‘File’</code>…) and has to be connected (inside this function) to the corresponding dispersive formula or file.</p>
+</div>
+<div id="the-coatings-of-the-two-sides" class="section level3">
+<h3>3. The coatings of the two sides</h3>
+<p>For Example 2, assume the substrate is a plano parallel slab of transparent glass, coated with thin films at both sides. The transparency of the substrate is an absolute requirement for the validity of the following two-sided calculations. Certainly, any substrate with a thickness of the order of millimeters will absorb all the light unless the imaginary part <code>kappa</code> of its refractive index value (written <span class="math inline">\(k\)</span> in our formulas above and <code>kap</code> in the previous function) is absolutely negligible. Thus, the results computed in our programs are not valid unless the requirement of transparency of the substrate is fulfilled.</p>
+<p>For simplicity, we continue working with the same range of wavelengths:</p>
+<pre><code>nlamb=31; x=linspace(400,700,nlamb);   </code></pre>
+<p>If the substrate is transparent, its thickness is not relevant and it can be characterized in our programs as one layer of ‘Inf’ thickness:</p>
+<pre><code>Inf &#39;BK7&#39; {0};</code></pre>
+<p>Assume that the substrate is coated at the first side, and the first side structure is (from ambient to substrate):</p>
+<pre><code>layers_a = {Inf &#39;Constant&#39; {1. 0.};
+          200 &#39;Sellmeier&#39; {1.7 10000.};
+           30 &#39;Cauchy&#39;    {1.5 10000. 0. 0.1 150.};
+          Inf &#39;BK7&#39;       {0}};</code></pre>
+<p>We will suppose that the second side is also coated, with a structure (from substrate to ambient):</p>
+<pre><code>layers_b = {Inf &#39;BK7&#39;   {0};      
+          300 &#39;Cauchy&#39;  {1.8 10000. 0. 0. 0.};
+          30  &#39;File&#39;    {‘EMA3_n_k.dat’};
+          Inf &#39;Constant&#39; {1. 0.}};</code></pre>
+<p>Note that, for the problem to be meaningful, the last layer at the incident side must be exactly like the first layer of the second side.</p>
+</div>
+</div>
+<div id="b.-performing-the-core-calculations" class="section level2">
+<h2>B. Performing the Core Calculations</h2>
+<div id="front-side-a-forward-calculations" class="section level3">
+<h3>1. Front side (‘a’) forward calculations</h3>
+<p>Assuming an incidence angle of 10 degrees, the following code calculates the ‘Plus’ quantities at the ‘a’ side, using expression (10):</p>
+<pre><code>incang=10*pi/180*linspace(1,1,length(x)); 
+[rs,rp,Ts,Tp]=calc_rsrpTsTp(incang,layers_a,x);
+Rs_aPlus=(abs(rs)).^2;
+Rp_aPlus=(abs(rp)).^2;
+Ts_aPlus=Ts;
+Tp_aPlus=Tp;</code></pre>
+</div>
+<div id="front-side-a-backward-calculations" class="section level3">
+<h3>2. Front side (‘a’) backward calculations</h3>
+<p>To calculate the ‘Minus’ quantities at the ‘a’ side at oblique incidence is a subtle matter. First, reversing the layers is required, by defining a new configuration:</p>
+<pre><code>layers_ainv=layers_a(end:-1:1,:);   % inverts layers</code></pre>
+<p>where the use of the <code>:</code> operator does the reversing inside the parenthesis <code>(end:-1:1,:)</code>.</p>
+<p>A deep understanding of the electromagnetic theory explained in chapter 2 of Ref (Macleod 2010) would be required for fully demonstrating the following procedure. In practical terms, it is only necessary to note that the dispersive nature of the materials implies that the angle entering the substrate changes with the wavelength, according to Snell law (1). Thus, we need to calculate the incidence angle in the way back (<code>incang_inv</code>), from the knowledge of the forward incidence angle (<code>incang</code>). The refractive indices of the ‘ambient’ medium in the ‘forward’ and ‘backward’ trajectories, respectively, are:</p>
+<pre><code>N0=calc_Nlayer(layers_a,x,1);
+N0_inv=calc_Nlayer(layers_ainv,x,1);</code></pre>
+<p>If Snell law (1) is applied to the first and last angles at the coating of the ‘a’ side, one has:</p>
+<p><span class="math display">\[
+N_0\sin\theta_0=N_m\sin\theta_m
+\]</span></p>
+<p>where the quantities <span class="math inline">\(N_0\)</span>, <span class="math inline">\(\theta_0\)</span>, <span class="math inline">\(N_m\)</span>, <span class="math inline">\(\theta_m\)</span> correspond in our code, respectively, to the variables <code>N0</code>, <code>incang</code>, <code>N0_inv</code> and <code>incang_inv</code>. Thus the code for computing the right value for <code>incang_inv</code> is:</p>
+<pre><code>incang_inv=asin(N0.*sin(incang)./N0_inv);</code></pre>
+<p>Now we are ready for the backwards (corresponding to the <code>Minus</code>) calculations at the ‘a’ side:</p>
+<pre><code>Rs_aMinus=(abs(rs)).^2;
+Rp_aMinus=(abs(rp)).^2;
+Ts_aMinus=Ts;
+Tp_aMinus=Tp;</code></pre>
+</div>
+<div id="back-side-b-calculations" class="section level3">
+<h3>3. Back side (b) calculations</h3>
+<p>Fortunately for the ‘b’ side we only need the forward calculations. Since the substrate is plano-parallel, the incidence angles for the wavelengths <code>x</code> at side ‘b’ in the forward direction are the same as the exit angles at side ‘a’ in forward direction. These are exactly the same angles we have just calculated: <code>incang_inv</code>. Thus, for the forward direction at side ‘b’, where the coating is defined by the structure <code>layers_b</code> the required code is:</p>
+<pre><code>[rs,rp,Ts,Tp]=calc_rsrpTsTp(incang_inv,layers_b,x);
+Rs_bPlus=(abs(rs)).^2;
+Rp_bPlus=(abs(rp)).^2;
+Ts_bPlus=Ts;
+Tp_bPlus=Tp;</code></pre>
+</div>
+</div>
+<div id="c.-combining-and-plotting-the-results" class="section level2">
+<h2>C. Combining and Plotting the Results</h2>
+<div id="computing-the-overall-r-and-t" class="section level3">
+<h3>1. Computing the overall R and T</h3>
+<p>All the required quantities are available now for computing the measurable magnitudes R or T for the substrate coated at both sides. Anyway, it has to be noted that the ‘s’ and ‘p’ modes are still independent and separate calculations have to be performed, according to expressions (10).</p>
+<pre><code>Rs=(Rs_aPlus+Rs_bPlus.*(Ts_aPlus.^2-Rs_aMinus.*Rs_bPlus)) ...
+./ (1-Rs_aMinus.*Rs_bPlus);
+Rp=(Rp_aPlus+Rp_bPlus.*(Tp_aPlus.^2-Rp_aMinus.*Rp_bPlus)) ...
+./ (1-Rp_aMinus.*Rp_bPlus);
+Ts=(Ts_aPlus.*Ts_bPlus) ./ (1-Rs_aMinus.*Rs_bPlus);
+Tp=(Tp_aPlus.*Tp_bPlus) ./ (1-Rp_aMinus.*Rp_bPlus);</code></pre>
+</div>
+<div id="some-interesting-comparisons" class="section level3">
+<h3>2. Some interesting comparisons</h3>
+<p>One can now compare the results. It is interesting for example to illustrate the difference between the reflectance of the sample (coated at both sides) with the reflectance due to the first side alone. Note that this last quantity can be easily measured by grinding the back side of the substrate (in fact destroying the glass smoothness and the coating at the back side), to avoid the light reflection from this side. Note that the differences between ‘s’ and ‘p’ polarizations in Figure 5 are indeed small, as expected due to the small value of the angle of incidence (10 deg). Conversely, the same Figure illustrates the big differences between the reflectances due to the ‘a’ side alone (<code>Rsa</code> and <code>Rpa</code>) and the reflectances due to the effect of the ‘a’ and ‘b’ sides together (<code>Rs</code> and <code>Rp</code>).</p>
+<p><img src="Figura_05.png" /> Figure 5. For 10 deg. incidence angle, reflectances due to the two sides of the coated substrate: <code>Rs</code> for incident ‘s’ polarized light, <code>Rp</code> for ‘p’ polarized light. For 10 deg. incidence angle, reflectances due to the ‘a’ side alone of the coated substrate: <code>Rsa</code> for incident ‘s’ polarized light, <code>Rpa</code> for ‘p’ polarized light.</p>
+<p>It is also interesting to check the validity of a completely general result demonstrated in the electromagnetic theory of thin films(Macleod 2010): any <code>Plus</code> transmittance coincides with the corresponding <code>Minus</code> one. The two comparisons are plotted independently in Figure 6, by using with the following code:</p>
+<pre><code>figure, plot(x,Rs,&#39;k&#39;,x,Rs_aPlus,&#39;k:&#39;,x,Rp,&#39;r&#39;,x,Rp_aPlus,&#39;r:&#39;)
+                legend(&#39;Rs&#39;,&#39;Rsa&#39;,&#39;Rp&#39;,&#39;Rpa&#39;)
+figure, plot(x,Ts_aPlus,&#39;--&#39;,x,Ts_aMinus,&#39;--&#39;,x,Tp_aPlus,&#39;-.&#39;...
+,x,Tp_aMinus,&#39;-.&#39;),  legend(&#39;TsaP&#39;,&#39;TsaM&#39;,&#39;TpaP&#39;,&#39;TpaM&#39;)</code></pre>
+<p>Figure 6 illustrates that, even when our coating include absorbing layers (like the innermost one at side ‘a’), our <code>Plus</code> transmittances coincides with the corresponding <code>Minus</code> transmittances. Thus, <code>TsaP</code> must coincide with <code>TsaM</code> and <code>TpaP</code> must coincide with <code>TpaM</code>. Note that this kind of result is not true for reflectances.</p>
+<p><img src="Figura_06.png" /> Figure 6. Computed transmittances for the ‘a’ side of the substrate, whose coating includes an absorbing layer. One can see the differences between ‘s’ and ‘p’ polarisations and the equivalence between the <code>Plus</code> and <code>Minus</code> propagation directions, since <code>TsaP</code> is the same as <code>TsaM</code> and <code>TpaP</code> is the same as <code>TpaM</code>.</p>
+<p>The complete code for Example 2 is contained in the file <code>Example2.m</code> available in our supplementary material.</p>
+</div>
+</div>
+</div>
+<div id="example-3-research-surface-plasmon-polariton" class="section level1">
+<h1>Example 3 (RESEARCH): Surface Plasmon Polariton</h1>
+<div id="a.-definition-of-the-physical-structure-2" class="section level2">
+<h2>A. Definition of the Physical Structure</h2>
+<p>Surface plasmons are surface charge oscillations propagating along a metal-dielectric interface when excited by proper illumination conditions. Surface plasmons are widely exploited for sensing purposes because the charge oscillation is highly dependent on the metal-dielectric interface shape, excitation configuration and optical properties of metal and dielectric. One of the most common ways to excite surface plasmons is the so-called Kretschmann configuration, in which a metal layer is deposited on top of a (hemi-spherical) glass substrate. When the film is illuminated from the glass side, a surface plasmon can be excited at the metal-air interface when light is incident in the proper angle.</p>
+<p>Assuming monochromatic light excitation (633. nm), we will simulate this configuration considering the propagation of light on the structure:</p>
+<pre><code>layers =  {Inf &#39;Constant&#39; {1.5 0.};        
+          30 &#39;Constant&#39; {0.056206 4.2776};
+           Inf &#39;Constant&#39; {1. 0.}};</code></pre>
+<p>where we consider a 30 nm thick silver layer on top of the glass. Note that, although the glass is the physical substrate, the layer structure is built according to the direction of light propagation (glass/layer/air). Since we are dealing with monochromatic light, we use the model <code>‘Constant’</code> for all involved materials. First we compute the reflectance of the system for any incidence angle:</p>
+<pre><code>x = 633.0;
+numang = 1000;
+Rs=zeros(numang); Rp=zeros(numang)           
+angles = linspace(0,90,numang)*pi/180;
+cont=0;
+for incang = angles
+cont=cont+1;
+[rs,rp,Ts,Tp]=calc_rsrpTsTp(incang,layers,x);
+Rs=abs(rs)^2; Rp=abs(rp)^2;
+end
+figure, plot(angles*180/pi,Rs,angles*180/pi,Rp);
+xlabel(&#39;incidence angle (deg)&#39;),ylabel(&#39;Reflectance&#39;), legend(&#39;Rs&#39;,&#39;Rp&#39;)</code></pre>
+<p>Note that, contrary to the previous examples, the wavelength vector array entering in the calculation has a constant value while the angle of incidence does not. We can now plot the dependence of reflectance with the angle of incidence.</p>
+<p><img src="Figura_07.png" /></p>
+<p>Figure 7. Reflectances of our sample versus the incidence angle.</p>
+<p>The figure shows that the reflectivity values are quite high (as corresponding to reflection from a metal surface), except for the case of p-polarized light incising at 43.6°, where a narrow drop in reflectance is observed. It corresponds to the resonant excitation of a surface plasmon at the metal-air interface: the incident light energy is efficiently transferred to the surface charge oscillation instead of being reflected to the detector. Note that the excitation is only possible for p-polarized light, for surface plasmons are longitudinal waves and couple with the electric field component perpendicular to the interface.</p>
+</div>
+<div id="refining-the-configuration-for-best-analysis" class="section level2">
+<h2>Refining the Configuration for Best Analysis</h2>
+<p>It can intuitively be expected that if the metal layer is too thick, light will not reach the metal-air interface and no surface plasmon will be excited. On the other hand, a too thin metal layer may be unable to produce efficient surface charge oscillations and an optimal metal layer thickness for surface plasmon excitation should exist. We can proceed as follows to find out the optimal thickness. We start by defining the same configuration, but now we will reduce the range of incidence angles and will change the metal layer thickness values, say between 0 and 100 nm. For these two ranges of values we will calculate <code>Rp</code> (the most relevant quantity, as explained) by using a loop over all metal layer thickness values: at each step we change the value of the thickness by modifying the quantity <code>layer{2,1}</code>. The results are plotted using the <code>pcolor</code> function.</p>
+<pre><code>% x = 633.0;
+
+numang = 150; angles = linspace(35,50,numang)*pi/180;
+numthk = 100; thicks = linspace(0,100,numthk);
+Rp=zeros(numthk,numang)           
+cont=0;
+for incang = angles
+cont=cont+1;
+for ith = 1:numthk
+layers{2,1}=thicks(ith);
+[rs,rp,Ts,Tp]=calc_rsrpTsTp(incang,layers,x);
+Rp(ith,cont)=abs(rp)^2;
+end
+end
+figure, pcolor(angles*180/pi,thicks,Rp), colormap jet
+xlabel(&#39;incidence angle (deg)&#39;),ylabel(&#39;thickness’), colorbar, shading interp</code></pre>
+<p><img src="Figura_08.png" /> Figure 8. Reflectances of our sample versus metal thickness and incidence angle.</p>
+<p>We see that the deepest drop in reflectance is observed for a layer thickness around 50 nm. As expected, very thick layers give high reflectivity and very thin layers show the total internal reflection behaviour of a glass/air interface with the characteristic critical angle around 41.8°.</p>
+<p>Finally, we can evaluate how the surface plasmon resonance in the Kretschmann configuration can be used for sensing of analytes present on the air side of the metal layer. Thus, we will analyze how the reflectance angular dependence changes when the refractive index of the air side varies due to the analyte presence. We will proceed in the same way as before, but instead of varying the thickness (that will be fixed now to 50 nm) we will vary the refractive index of the last layer (“substrate”) of the layers structure.</p>
+<pre><code>% 50 nm
+
+layers =  {Inf &#39;Constant&#39; {1.5 0.};         
+            50 &#39;Constant&#39; {0.056206 4.2776};
+           Inf &#39;Constant&#39; {1 0};};
+ 
+numang = 200; angles = linspace(40,90,numang)*pi/180;
+numnout = 100; nout = linspace(1.0,1.5,numnout);
+Rp = zeros(numnout,numang);
+cont=0; 
+for incang = angles
+    cont=cont+1;
+    for in=1:numnout
+        layers{3,3} = {nout(in),0};
+        [rs,rp,Ts,Tp]=calc_rsrpTsTp(incang,layers,x);
+        Rp(in,cont) = abs(rp)^2;
+    end
+end
+figure, pcolor(angles*180/pi,nout,Rp), colormap jet   
+xlabel(&#39;incidence angle (deg)&#39;),ylabel(&#39;air side refractive index&#39;), colorbar, shading interp;
+</code></pre>
+<p><img src="Figura_09.png" /> Figure 9. Reflectances of our sample versus air side refractive index and incidence angle.</p>
+<p>We can see that, as the refractive index of the air-side changes, the position of the reflectance dip shifts to larger angles. For small refractive index changes, the variation is nearly linear and we can define a sensitivity factor of 60 degrees per refractive index unit (RIU). Using these scripts we could easily compare now the performance of different materials or even material mixtures.</p>
+</div>
+</div>
+<div id="vi.-final-summary-of-the-procedures" class="section level1">
+<h1>VI. Final Summary of the Procedures</h1>
+<div id="a.-preliminaries" class="section level2">
+<h2>A. Preliminaries</h2>
+<p>The present Tutorial develops an intuitive approach to the topic of numerical computations for thin film coatings using a high level programming language environment (like Matlab or Python). Thus, after a concise theoretical introduction, we guide the user through practical examples. We want to enable the user to adapt the programs presented here to his/her needs. Let us summarize the full procedure.</p>
+<p>Before starting the process for the computations, it is necessary to know in detail the physical configuration of the sample: incidence angle and complete physical configuration, including physical thickness of all the layers and also all the refractive indices involved in the range of wavelengths of interest (including the materials for the ambient and the substrate). Note that the refractive indices of the materials can be defined in several ways and must be identified with a keyword, according to the characteristics of the material:</p>
+<ul>
+<li><p>for the ambient we always assume that is transparent; normally we use the keyword <code>‘Constant’</code> and we have to supply the two values <span class="math inline">\(n_0\)</span> and <span class="math inline">\(k_0\equiv 0\)</span>, for its complex refractive index <span class="math inline">\(N_0 = n_0-ik_0\)</span>. In fact, remember that always <span class="math inline">\(k_0\equiv 0\)</span> for the ambient.</p></li>
+<li><p>for one layer, we can use one keyword (like <code>‘Cauchy’</code> or <code>‘Sellmeier’</code>) to identify the dispersion model of the constituent material; we also have to supply the values to actually calculate its complex refractive index.</p></li>
+<li><p>for one layer, we can use the keyword <code>‘File’</code> and the name of the actual file (for example <code>'Ag_n_k.dat'</code>) to indicate that the complex refractive index values of the material can be interpolated from the data contained in the file with that name (see the Appendix for more details).</p></li>
+<li><p>for one dispersive substrate of known refractive index, we use one keyword that identifies the actual material (for example <code>'BK7'</code>) plus the characters <code>’{0}’</code> in our code; this way we indicate that the parameters to actually calculate its complex refractive index are given by the manufacturer’s data. Note that the refractive index of the substrate could also be specified like a dispersion model, like a <code>‘File’</code> or like a <code>‘Constant’</code> in the ways just explained above.</p></li>
+</ul>
+<p>Also, before starting the computations, we must be sure that the function</p>
+<pre><code>function Nlay = calc_Nlayer(layers,x,num_lay)</code></pre>
+<p>explained above, includes all the ‘cases’ that correspond to all the materials present in our configuration. If necessary, it is straightforward to include more ‘cases’ as required. Implicitly, we also must be sure that the files to be called by the function are appropriately defined and are available at the folder where we will work.</p>
+</div>
+<div id="b.-creating-the-script-for-the-calculations" class="section level2">
+<h2>B. Creating the Script for the Calculations</h2>
+<p>Once the requirements just cited for the above function <code>calc_Nlayer</code> are fulfilled, we may be sure that the later call to the function that performs the calculation of the coefficients <code>[rs,rp,Ts,Tp]</code> will work. In effect, the function</p>
+<pre><code>function [rs,rp,Ts,Tp] = calc_rsrpTsTp(incang,layers,x)</code></pre>
+<p>first, will calculate the refractive indices for the materials by calling the function</p>
+<pre><code>function Nlay = calc_Nlayer(layers,x,num_lay)</code></pre>
+<p>Subsequently this same function <code>calc_rsrpTsTp</code> will perform the calculations corresponding to our expressions (3), (4) and (5) automatically.</p>
+<p>Finally, the required script for the actual calculations, as in our detailed examples, will have to cover the following stages: - define the range of wavelengths. - define the physical structure of the sample. - call the function <code>calc_rsrpTsTp</code>. - perform the final calculations, always derived from knowing <code>rs</code>,<code>rp</code>,<code>Ts</code> and <code>Tp</code>, as shown in the examples or in Appendix A.</p>
+</div>
+</div>
+<div id="vii.-expansion-of-the-topics-covered.-future-extensions" class="section level1">
+<h1>VII. Expansion of the Topics Covered. Future Extensions</h1>
+<p>There are many practical situations not addressed in the present tutorial, of course, mainly because they would require sets of additional specifications. For example, dealing with the case of slightly absorbing substrates or coatings with inhomogeneous layers(S. Bosch 1992; Salvador Bosch 1990). These expansions would be quite straightforward anyway.</p>
+<p>The major general limitation of our work is the following: in the present Tutorial we have always addressed only the ‘direct problem’. Certainly, given all the quantities that uniquely define the physical problem, we have explained how to calculate the corresponding measurable magnitudes. But there is another kind of advanced software procedures that we have not addressed in our work: the ‘inverse problem’ where the unknowns of the problem are some values that define the configuration, which have to be estimated from the fitting of experimental data that are available to solve the problem.</p>
+<p>A practical case where the inverse problem appears is the manufacture of an AR coating prototype. Starting from the design values for the thicknesses of the layers, a vacuum chamber is prepared for coating the substrates. Modern equipment requires only introducing on a keyboard the parameters for the thicknesses of the layers, but the whole process implies some calibration, until the final results for the actual thicknesses are satisfactory. This final ‘quality’ is assessed by measuring the reflectance obtained, and then changing the parameters for the thicknesses by trial-and-error procedure, until the performance is satisfactory. The estimation of the thicknesses during the process is done from the reflectance measurements, solving a typical ‘inverse problem’. The way to address inverse problems in programs is to define a ‘merit function’ and to use a suitable search algorithm that wisely changes iteratively the unknown quantities until a minimum for the merit function is found(others] 1992).</p>
+<p>We intentionally have not addressed the advanced procedures required for solving inverse problems since they would be too specific for an introductory Tutorial. Moreover, it would be very difficult to propose general techniques for the wide range of potential optimization objectives. There are specialized software packages that address the computation and fitting of performances (including design features) for a wide range of thin film structures(“OptiLayer - Thin Film Software” n.d.). Anyway, the ability for addressing simple (not highly specialized) numerical design problems is indeed of great practical interest in laboratories where the manufacture of thin film products is the daily task. Often it is not the best option for these laboratories to have to work using very specialized software packages, mainly when sophisticated new designs are not required. Thus, it could be interesting for the future to present a new work (similar to the present Tutorial) devoted to ordinary laboratory tasks involving ‘inverse problems’. For example: the characterization of the materials in thin film phase, the development of simple optical design techniques for quick manufacture, the optimization of the geometrical configuration in the vacuum chambers for improving thickness uniformity, etc (S. Bosch 1992; 1993; S. Bosch and Roca 1991; Salvador Bosch and Roca 1993).</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1>Acknowledgements</h1>
+<p>The authors wish to thank Drs. Enrico Massetti, Angela Piegari, Detlev Ristau, Stefan Guenster, Adolf Canillas and all the colleagues in projects CHRX-CT93-0336 and FMRX-CT97-0101 for their friendship and former collaboration. Dr Macleod trespassed during the writing of this Tutorial. Requiescat in pace.</p>
+</div>
+<div id="appendix" class="section level1">
+<h1>Appendix</h1>
+<div id="other-calculations-of-practical-interest" class="section level2">
+<h2>Other Calculations of Practical Interest</h2>
+<p>On the basis of the same numerical scheme we have developed in this Tutorial, many other calculation of practical interest can easily be made. For example, for a thin film coating on a semi-infinite substrate, it may be of interest to find the change of phase between the incident and the reflected beams. We have not covered this kind of topics here but it is not difficult to show (Azzam, Bashara, and Ballard 1978) (Jellison Jr 1993; Tompkins and Irene 2005) that we can address them in terms of the magnitude <span class="math inline">\(\rho = r_p/r_s,\; \mathrm{or}\; \left(\Psi,\Delta\right)\)</span>, defined in our expression (8). The relevant values can be directly calculated from our functions. Namely,</p>
+<pre><code>RO = rp./rs; 
+cosDelta = -cos(angle(RO)); 
+tanPsi = abs(RO);</code></pre>
+<p>As a second example, if the substrate is not a perfectly parallel slab of material, when measuring the light transmittance it may be more accurate to neglect multiple reflections at the sides of the substrate (an implicit assumption for the validity of expression (9)) and make the hypothesis that the actual measurement is not precisely given by</p>
+<pre><code>T = (T_aPlus.*T_bPlus) ./ (1-R_aMinus.*R_bPlus);</code></pre>
+<p>which is expression (9), but more correctly by, simply</p>
+<p><code>T = T_aPlus*T_bPlus;</code></p>
+<p>Clearly, in this example we illustrate a practical problem where the theoretical formulas are different and the key point for the success of the laboratory procedures is to know what is the right model to represent our actual sample.</p>
+<p>As a final example, sometimes the substrate is a piece of (expensive) polished material not to be spoiled by grinding its back surface, as required for measuring the one side reflectance. Then, it may be useful to measure the reflectance from the back side. Strictly speaking, the procedures developed for Example 2 do not include the option we need. But, to calculate the back side reflectance from the knowledge of the front side configuration may be done as follows. Suppose we have the following configuration</p>
+<pre><code>layers_a = {Inf &#39;Constant&#39; {1. 0.};
+          200 &#39;Sellmeier&#39; {1.7 10000.};
+          100 &#39;Cauchy&#39;    {1.5 10000. 0. 0. 0.};
+          Inf &#39;BK7&#39;       {0};
+
+layers_b = {Inf &#39;BK7&#39;   {0};      
+          Inf &#39;Constant&#39; {1. 0.}};</code></pre>
+<p>Then, by changing the configuration to the following,</p>
+<pre><code>layers_a = {Inf &#39;Constant&#39; {1. 0.};
+          Inf &#39;BK7&#39;       {0};
+
+layers_b = {Inf &#39;BK7&#39;   {0};      
+          100 &#39;Cauchy&#39;    {1.5 10000. 0. 0. 0.};
+          200 &#39;Sellmeier&#39; {1.7 10000.};
+          Inf &#39;Constant&#39; {1. 0.}};</code></pre>
+<p>the use of expressions (9) solves the problem.</p>
+</div>
+<div id="b.-interpolation-of-refractive-index-data" class="section level2">
+<h2>B. Interpolation of Refractive Index Data</h2>
+<p>Suppose that the refractive index of one material is to be obtained from interpolation of values stored in a database of optical constants for coating materials(“RefractiveIndex.INFO - Refractive Index Database” n.d.; Johnson and Christy 1972). In this case, the simplest way for using our software is linear interpolation of the refractive index values (for the current range of wavelengths). The file with the data must have the suitable format. For example, assume we have the original data for <code>‘Ag’</code> in a file named <code>'Ag_n_k.dat'</code>, that covers the 188-1937 nm wavelength range (find it with our supplementary material). The file contains refractive index data for ‘Ag’ in the 3 columns, with the following format (<code>‘nm   n    k’</code>), where the <code>k</code> values are positive:</p>
+<pre><code>…
+276.1       1.41    1.331
+284.4       1.41    1.264
+292.4       1.39    1.161
+300.9       1.34    0.964
+…</code></pre>
+<p>Provided the data cover the wavelength range, the wavelength units are the same as in our code (in our case ‘nm’) and they are stored in three columns as shown, our program reads the file (here <code>'Ag_n_k.dat'</code>) and linearly interpolates the original <code>n</code> and <code>k</code> values to our wavelengths of interest, as defined by the variable <code>x</code>. The suitable lines of code are:</p>
+<pre><code>        case &#39;File&#39;       
+            aux=load(layers{num_lay,3}{1});  % N,k data           
+            nnn=interp1(aux(:,1),aux(:,2),x); 
+            kap=interp1(aux(:,1),aux(:,3),x); 
+            Nlay=nnn-1i*abs(kap);     
+            Nlay=reshape(Nlay,[1,length(x)]);</code></pre>
+<p>which are contained inside the function <code>calc_Nlayer(layers,x,num_lay)</code>, described in the text above.</p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
